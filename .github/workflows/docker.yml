@@ -42,11 +42,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Cmd 1: Rename the real top-level README
-      # Cmd 2: Copy package README to top-level
-      - name: Copy README to top-level
+      # Cmd 2: Copy package markdown to top-level README
+      - name: Copy package markdown to top-level README
         run: |
           mv README.md README-top-level.md
-          cp ${{ inputs.readme }} .
+          cp ${{ inputs.readme }} README.md
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -56,7 +56,7 @@ jobs:
           push: true
           tags: ${{ inputs.registry }}/${{ inputs.image-name }}:${{ inputs.version }}, ${{ inputs.registry }}/${{ inputs.image-name }}:latest
 
-      # Cmd 1: Delete the copied package README
+      # Cmd 1: Delete the copied package markdown
       # Cmd 2: Rename the real top-level README
       - name: Switch top-level README back
         run: |
