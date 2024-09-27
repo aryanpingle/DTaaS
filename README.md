@@ -1,4 +1,4 @@
-# :factory: :left_right_arrow: :busts_in_silhouette: Digital Twin as a Service
+ # :factory: :left_right_arrow: :busts_in_silhouette: Digital Twin as a Service
 
 ## :grinning: Motivation
 
