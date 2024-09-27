@@ -17,6 +17,10 @@ on:
       dockerfile:
         required: true
         type: string
+      # Path from the project root to the package README
+      readme:
+        required: true
+        type: string
 
 jobs:
   build-and-push-image:
@@ -37,6 +41,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Cmd 1: Rename the real top-level README
+      # Cmd 2: Copy package README to top-level
+      - name: Copy README to top-level
+        run: |
+          mv README.md README-top-level.md
+          cp ${{ inputs.readme }} .
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -44,3 +55,10 @@ jobs:
           file: ./docker/${{ inputs.dockerfile }}
           push: true
           tags: ${{ inputs.registry }}/${{ inputs.image-name }}:${{ inputs.version }}, ${{ inputs.registry }}/${{ inputs.image-name }}:latest
+
+      # Cmd 1: Delete the copied package README
+      # Cmd 2: Rename the real top-level README
+      - name: Switch top-level README back
+        run: |
+          rm README.md
+          mv README-top-level.md README.md
