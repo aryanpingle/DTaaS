@@ -45,8 +45,10 @@ jobs:
       # Cmd 2: Copy package markdown to top-level README
       - name: Copy package markdown to top-level README
         run: |
-          mv README.md README-top-level.md
-          cp ${{ inputs.readme }} README.md
+          echo "# NOTHING" > README.md
+          cat README.md
+        # mv README.md README-top-level.md
+        # cp ${{ inputs.readme }} README.md
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
