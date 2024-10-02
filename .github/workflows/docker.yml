@@ -42,6 +42,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker meta
+        id: meta
         uses: docker/metadata-action@v5
         with:
           images: aryanpingle/dtaas-web
