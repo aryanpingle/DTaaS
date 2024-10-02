@@ -54,6 +54,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          outputs: |
+            type=image,name=target,annotation.org.opencontainers.image.source='https://github.com/aryanpingle/LeetPy'
           labels: |
             org.opencontainers.image.source=https://github.com/aryanpingle/LeetPy
           file: ./docker/${{ inputs.dockerfile }}
