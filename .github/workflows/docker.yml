@@ -54,6 +54,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          labels: |
+            org.opencontainers.image.source=https://github.com/aryanpingle/LeetPy
           file: ./docker/${{ inputs.dockerfile }}
           push: true
           tags: ${{ inputs.registry }}/${{ inputs.image-name }}:${{ inputs.version }}, ${{ inputs.registry }}/${{ inputs.image-name }}:latest
