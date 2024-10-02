@@ -45,8 +45,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: name/app
-          tags: |
-            org.opencontainers.image.source=https://github.com/aryanpingle/LeetPy
+          labels: |
+            org.opencontainers.image.source='https://github.com/aryanpingle/LeetPy'
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
