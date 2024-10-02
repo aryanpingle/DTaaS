@@ -44,7 +44,7 @@ jobs:
       - name: Docker meta
         uses: docker/metadata-action@v5
         with:
-          images: name/app
+          images: aryanpingle/dtaas-web
           labels: |
             org.opencontainers.image.source='https://github.com/aryanpingle/LeetPy'
 
@@ -52,10 +52,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          outputs: |
-            type=image,name=dtaas-web,annotation.org.opencontainers.image.source=https://github.com/aryanpingle/LeetPy
-          labels: |
-            org.opencontainers.image.source=https://github.com/aryanpingle/LeetPy
           file: ./docker/${{ inputs.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
