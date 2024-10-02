@@ -41,19 +41,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: aryanpingle/dtaas-web
-          labels: |
-            org.opencontainers.image.source='https://github.com/aryanpingle/LeetPy'
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./docker/${{ inputs.dockerfile }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          annotations: ${{ steps.meta.outputs.annotations }}
+
+      - name: Update README on GitHub Container Registry
+        run: |
+          ghcr_url="https://ghcr.io/v2/${{ github.repository }}/{{ inputs.image-name }}"
+          readme_content=$(cat client/README.md)
+          curl -X PATCH \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"description\": \"${readme_content}\"}" \
+            ${ghcr_url}
