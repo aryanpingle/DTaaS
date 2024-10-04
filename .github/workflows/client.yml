@@ -90,15 +90,10 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
 
   publish-docker-image:
-    if: | 
-      github.event_name == 'push' &&
-      (startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release-v'))
-      
     name: Publish Docker image
     needs: [client, get_version]
     uses: ./.github/workflows/docker.yml
     with: 
-      registry: ghcr.io
-      image-name: into-cps-association/dtaas-web
+      image-name: aryanpingle/dtaas-web
       version: ${{ needs.get_version.outputs.version }}
       dockerfile: client.dockerfile
