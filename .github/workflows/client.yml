@@ -33,7 +33,7 @@ jobs:
     needs: [get_version]
     uses: ./.github/workflows/docker.yml
     with: 
-      image-name: aryanpingle/dtaas-web
+      image-name: dtaas-web
       version: ${{ needs.get_version.outputs.version }}
       dockerfile: client.dockerfile
     secrets: inherit
