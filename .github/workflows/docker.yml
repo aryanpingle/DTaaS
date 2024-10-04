@@ -35,6 +35,7 @@ jobs:
           DOCKERHUB_USERNAME: "aryanpingle"
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
+          echo $DOCKERHUB_USERNAME
           echo "$DOCKERHUB_PASSWORD" | docker login --password-stdin --username $DOCKERHUB_USERNAME
         
 
