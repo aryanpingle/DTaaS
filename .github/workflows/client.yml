@@ -36,3 +36,4 @@ jobs:
       image-name: aryanpingle/dtaas-web
       version: ${{ needs.get_version.outputs.version }}
       dockerfile: client.dockerfile
+    secrets: inherit
