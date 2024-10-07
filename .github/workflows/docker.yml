@@ -61,4 +61,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: aryanpingle/DTaaS
-          readme-filepath: client/README.md
+          short-description: "Sample description"
