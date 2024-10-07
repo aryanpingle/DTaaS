@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        if: env.exists == 'false'
+        # if: env.exists == 'false'
         uses: docker/build-push-action@v6
         with:
           context: .
