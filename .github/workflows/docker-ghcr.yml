@@ -58,6 +58,4 @@ jobs:
           context: .
           file: ./docker/${{ inputs.dockerfile }}
           push: true
-          tags: |
-            ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:${{ inputs.version }}, \
-            ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:latest
+          tags: ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:${{ inputs.version }}, ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:latest
