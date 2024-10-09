@@ -92,7 +92,7 @@ jobs:
   publish-docker-image:
     name: Publish Docker image
     needs: [get_version]
-    uses: ./.github/workflows/docker.yml
+    uses: ./.github/workflows/docker/ghcr.yml
     with: 
       image-name: dtaas-web
       version: ${{ needs.get_version.outputs.version }}
