@@ -1,7 +1,7 @@
 # Reusable workflow for building and pushing a Docker Image to the given registry:
 # 
 # 1. GitHub Container Registry:
-#   username: <repository owner>
+#   username: <automatically uses the repository owner>
 #   password: <automatically generated GH token>
 # 2. DockerHub
 #   username: <repository variable>
@@ -25,6 +25,14 @@ on:
       readme-file:
         required: true
         type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+        type: string
+      DOCKERHUB_TOKEN:
+        required: false
+        type: string
+        default: ""
 
 jobs:
   build-and-push-image:
