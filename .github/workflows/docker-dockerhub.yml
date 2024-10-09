@@ -70,5 +70,5 @@ jobs:
         with:
           username: ${{ env.registry }}
           password: ${{ env.username }}
-          repository: ${{ env.registry }}/${{ inputs.image-name }}
+          repository: ${{ env.username }}/${{ inputs.image-name }}
           readme-filepath: ${{ inputs.readme-file }}
