@@ -1,6 +1,6 @@
-# Reusable workflow for building and pushing a Docker Image to GHCR
+# Reusable workflow for building and pushing a Docker Image to DockerHub
 
-name: Build and Push Docker Image (GHCR)
+name: Build and Push Docker Image (DockerHub)
 
 on:
   workflow_call:
@@ -15,11 +15,17 @@ on:
       dockerfile:
         required: true
         type: string
+      readme-file:
+        required: true
+        type: string
+    secrets:
+      DOCKERHUB_TOKEN:
+        required: true
 
 env:
-  registry: ghcr.io
-  username: ${{ github.actor }}
-  password: ${{ secrets.GITHUB_TOKEN }}
+  registry: docker.io
+  username: ${{ vars.DOCKERHUB_USERNAME }}
+  password: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
   build-and-push-image:
@@ -52,7 +58,6 @@ jobs:
           fi
 
       - name: Build and push Docker image
-        # if: env.exists == 'false'
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -61,3 +66,11 @@ jobs:
           tags: |
             ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:${{ inputs.version }}, \
             ${{ env.registry }}/${{ env.username }}/${{ inputs.image-name }}:latest
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ env.registry }}
+          password: ${{ env.username }}
+          repository: ${{ env.registry }}/${{ inputs.image-name }}
+          readme-filepath: ${{ inputs.readme-file }}
