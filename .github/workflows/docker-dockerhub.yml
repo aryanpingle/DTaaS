@@ -19,12 +19,14 @@ on:
         required: true
         type: string
     secrets:
+      DOCKERHUB_USERNAME:
+        required: true
       DOCKERHUB_TOKEN:
         required: true
 
 env:
   registry: docker.io
-  username: ${{ vars.DOCKERHUB_USERNAME }}
+  username: ${{ secrets.DOCKERHUB_USERNAME }}
   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
 jobs:
