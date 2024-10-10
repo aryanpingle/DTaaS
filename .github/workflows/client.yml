@@ -94,7 +94,7 @@ jobs:
     needs: [get_version]
     uses: ./.github/workflows/docker-ghcr.yml
     with: 
-      image-name: somerandomstuff/dtaas-web
+      image-name: aryanpingle/dtaas-web
       version: ${{ needs.get_version.outputs.version }}
       dockerfile: client.dockerfile
     secrets: inherit
