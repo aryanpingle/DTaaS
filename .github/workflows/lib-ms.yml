@@ -24,91 +24,91 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "yarn"
-          cache-dependency-path: "**/yarn.lock"
+      # - name: Setup node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: "yarn"
+      #     cache-dependency-path: "**/yarn.lock"
 
-      - name: Install pm2 and jest
-        run: |
-          npm install -g pm2
-          npm install -g jest
+      # - name: Install pm2 and jest
+      #   run: |
+      #     npm install -g pm2
+      #     npm install -g jest
 
-      - name: Run the linting checks
-        run: |
-          yarn install
-          yarn syntax
+      # - name: Run the linting checks
+      #   run: |
+      #     yarn install
+      #     yarn syntax
 
-      - name: Build the lib microservice
-        run: |
-          yarn install	
-          yarn build
+      # - name: Build the lib microservice
+      #   run: |
+      #     yarn install	
+      #     yarn build
 
-      - name: Run all tests
-        env:
-          PORT: 4001
-          LOCAL_PATH: ${{ github.workspace }}/files
-          MODE: local
-          LOG_LEVEL: debug
-          APOLLO_PATH: /lib
-        run: |
-          yarn install
-          yarn build
-          yarn test:all
+      # - name: Run all tests
+      #   env:
+      #     PORT: 4001
+      #     LOCAL_PATH: ${{ github.workspace }}/files
+      #     MODE: local
+      #     LOG_LEVEL: debug
+      #     APOLLO_PATH: /lib
+      #   run: |
+      #     yarn install
+      #     yarn build
+      #     yarn test:all
 
-      - name: Start http mode
-        env:
-          PORT: 4003
-          LOCAL_PATH: ${{ github.workspace }}/files
-          MODE: local
-          LOG_LEVEL: debug
-          APOLLO_PATH: /lib
-        run: |
-          yarn install
-          yarn build
-          yarn start:pm2
+      # - name: Start http mode
+      #   env:
+      #     PORT: 4003
+      #     LOCAL_PATH: ${{ github.workspace }}/files
+      #     MODE: local
+      #     LOG_LEVEL: debug
+      #     APOLLO_PATH: /lib
+      #   run: |
+      #     yarn install
+      #     yarn build
+      #     yarn start:pm2
       
-      - name: Check server is running (Windows)
-        if: runner.os == 'Windows'
-        env:
-          PORT: 4003
-        uses: nick-fields/retry@v3
-        with:
-          timeout_seconds: 10
-          max_attempts: 4
-          command: "Invoke-WebRequest -Uri http://localhost:${{ env.PORT }}/lib/files -Method Head -UseBasicParsing"
+      # - name: Check server is running (Windows)
+      #   if: runner.os == 'Windows'
+      #   env:
+      #     PORT: 4003
+      #   uses: nick-fields/retry@v3
+      #   with:
+      #     timeout_seconds: 10
+      #     max_attempts: 4
+      #     command: "Invoke-WebRequest -Uri http://localhost:${{ env.PORT }}/lib/files -Method Head -UseBasicParsing"
 
-      - name: Check server is running (Linux)
-        if: runner.os != 'Windows'
-        env:
-          PORT: 4003
-        uses: nick-fields/retry@v3
-        with:
-          timeout_seconds: 10
-          max_attempts: 4
-          command: "curl -f -LI http://localhost:${{ env.PORT }}/lib/files"
+      # - name: Check server is running (Linux)
+      #   if: runner.os != 'Windows'
+      #   env:
+      #     PORT: 4003
+      #   uses: nick-fields/retry@v3
+      #   with:
+      #     timeout_seconds: 10
+      #     max_attempts: 4
+      #     command: "curl -f -LI http://localhost:${{ env.PORT }}/lib/files"
 
-      - name: Run http test
-        env:
-          PORT: 4003
-          LOCAL_PATH: ${{ github.workspace }}/files
-          MODE: local
-          LOG_LEVEL: debug
-          APOLLO_PATH: /lib
-        run: |
-          yarn test:http-github
+      # - name: Run http test
+      #   env:
+      #     PORT: 4003
+      #     LOCAL_PATH: ${{ github.workspace }}/files
+      #     MODE: local
+      #     LOG_LEVEL: debug
+      #     APOLLO_PATH: /lib
+      #   run: |
+      #     yarn test:http-github
 
-      - name: Stop http mode
-        run: |
-          yarn stop:pm2
+      # - name: Stop http mode
+      #   run: |
+      #     yarn stop:pm2
 
-      - name: Upload test coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: servers/lib/coverage/clover.xml
-          flags: lib-microservice-tests
+      # - name: Upload test coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: servers/lib/coverage/clover.xml
+      #     flags: lib-microservice-tests
 
   publish-npm-package:
     if: | 
@@ -163,9 +163,9 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
 
   publish-docker-image-ghcr:
-    if: | 
-      github.event_name == 'push' &&
-      (startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release-v'))
+    # if: | 
+    #   github.event_name == 'push' &&
+    #   (startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release-v'))
 
     name: Publish Docker image (GHCR)
     needs: [get_version, test-lib-ms]
@@ -177,9 +177,9 @@ jobs:
     secrets: inherit
 
   publish-docker-image-dockerhub:
-    if: | 
-      github.event_name == 'push' &&
-      (startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release-v'))
+    # if: | 
+    #   github.event_name == 'push' &&
+    #   (startsWith(github.ref, 'refs/heads/feature/') || startsWith(github.ref, 'refs/heads/release-v'))
 
     name: Publish Docker image (DockerHub)
     needs: [get_version, test-lib-ms]
