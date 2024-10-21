@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "ghcr-scope=${REPOSITORY_OWNER,,}" >> $GITHUB_ENV
         env:
-          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          REPOSITORY_OWNER: INTO-CPS-Association
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
